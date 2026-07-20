@@ -13,7 +13,7 @@ Capa web de presentación montada sobre los artefactos de `fabrizio-career/` (CV
 **Objetivo** (del `PLAN-portafolio.md`): romper la percepción "PHP legacy" y apuntar a roles
 backend / product-engineer **remotos USD 2-3k**, bilingüe es/en.
 
-**Stack:** Nuxt 3 (SSG) · Vue 3 · @nuxt/content v2 · Tailwind CSS. Output 100% estático → hostea en cualquier lado (recomendado: Vercel).
+**Stack:** Nuxt 3 (SSG) · Vue 3 · @nuxt/content v2 · @nuxtjs/i18n · Tailwind CSS. Output 100% estático → hostea en cualquier lado (recomendado: Vercel). **Bilingüe es/en** (en default sin prefijo · `/es/*` para español).
 
 ---
 
@@ -24,7 +24,10 @@ backend / product-engineer **remotos USD 2-3k**, bilingüe es/en.
 | `nuxt.config.ts` | Config: SSG (`nitro.prerender` + `crawlLinks`), módulos (content, tailwind), SEO head, fuentes Inter/JetBrains Mono. |
 | `tailwind.config.js` | Branding del CV (`ink/accent/mute/line`) + plugin `@tailwindcss/typography` para la prosa de los `.md`. |
 | `assets/css/main.css` | `@tailwind` directives + base layer (body, `::selection`, helper `.container-content`). |
-| `composables/useSite.ts` | **Source of truth de copy/data**: site meta, nav, hero, métricas, skills, channels. |
+| `composables/useSite.ts` | **Source of truth de copy/data**: site meta, nav, hero, métricas, skills, channels. Locale-reactivo vía `useI18n()`. |
+| `composables/useContentPath.ts` | Helper que prefija `/es` a los paths de content según locale actual (para `queryContent`). |
+| `i18n/locales/{en,es}.json` | Mensajes de Vue i18n por locale: UI strings, hero, metrics, skills groups, channels, SEO. |
+| `content/es/{projects,case-studies}/*.md` | Espejo español de los 5 content files (terminología argentina del CV). |
 | `layouts/default.vue` | Header + `<slot/>` + Footer. |
 | `components/` | `AppHeader`, `AppFooter`, `SectionHeading`, `MetricStrip`, `ProjectCard`, `CaseStudyCard`. |
 | `pages/index.vue` | Home: hero + métricas + featured projects + case studies + CTA. |
@@ -54,13 +57,12 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 
 ## Estado actual (verificado 2026-07-20)
 
-- ✅ SSG build limpio: **34 rutas** prerenderizadas, 0 errores.
-- ✅ Smoke test HTTP sobre el build: 10/10 rutas → 200 con contenido real.
-- ✅ Hidratación correcta: `_payload.json` por ruta + `/api/_content/query/*.json` (el `null` del `__NUXT_DATA__` inline es un stub, no un bug — los datos viven en esos JSON externos).
-- ✅ Git init + commit inicial (`82ad1f7`).
-- ✅ Contenido **real** del CV (no placeholders).
-
----
+- ✅ SSG build limpio: **67 rutas** prerenderizadas (dobladas: en + `/es/*`), 0 errores.
+- ✅ Smoke test sobre el build: titles, html lang, hreflang + canonical, contenido localizado verificados en ambas locales.
+- ✅ **Bilingüe es/en completo** — `@nuxtjs/i18n` `prefix_except_default` (`/` en, `/es/*` es). Lang switcher en header. SEO hreflang completo (x-default, en, en-US, es, es-AR).
+- ✅ Hidratación correcta: `_payload.json` por ruta + `/api/_content/query/*.json`.
+- ✅ Git init + commit inicial (`82ad1f7`) + commit bilingüe (`70c2642`).
+- ✅ Contenido **real** del CV (no placeholders). Traducciones ES con terminología argentina oficial.
 
 ## Decisiones de stack y contenido
 
@@ -71,10 +73,9 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 - **Branding heredado del CV**: `ink #1a1a1a`, `accent #2c3e50`, `mute #666`, `line #cfd3d8`.
 - **Markdown-driven** (`@nuxt/content`): sumar proyecto = dropear un `.md`.
 - **Métricas hard** en el home (5 yrs · 30k/día · 5 países · 30s→2s) para romper el "PHP legacy".
+- **Bilingüe es/en** vía `@nuxtjs/i18n` (`prefix_except_default`): `/` = en (sin prefijo, audiencia principal), `/es/*` = español. Content split por directorio (`content/{projects,case-studies}/*.md` para en, `content/es/...` para es). SEO hreflang completo (x-default/en/en-US/es/es-AR) vía `useLocaleHead`.
 
 ### Lo que NO (por ahora)
-- ❌ Bilingüe es/en → **fase 2**. Architecturado en `useSite.ts` (objeto centralizado) para que sea un swap limpio.
-- ❌ `@nuxtjs/i18n` el día 1 → enreda `content × SSG` sin necesidad.
 - ❌ Dark mode, animaciones, mobile menu → YAGNI para v1 (el header wrapea bien en mobile con 4 items).
 - ❌ `@nuxt/image`, OG image → fase 2 (sin imágenes todavía).
 
@@ -111,14 +112,13 @@ order: 1                 # menor = primero
 ## Markdown body…
 ```
 
-Aparece solo en `/projects` y genera su `/projects/mi-proyecto`. Mismo patrón para case studies (`area` en lugar de `stack`).
+Aparece solo en `/projects` y genera su `/projects/mi-proyecto`. Para que exista en español, crear **también** `content/es/projects/mi-proyecto.md` (espejo traducido — mismo frontmatter, mismo `order`). Si no existe, `/es/projects` simplemente no lo lista. Mismo patrón para case studies (`area` en lugar de `stack`).
 
 ---
 
 ## Pendientes (fase 2)
 
 - ⏳ **Push a GitHub + deploy Vercel** (pasos exactos en `DEPLOY.md`).
-- ⏳ **Bilingüe es/en** — `@nuxtjs/i18n`; traducir `useSite.ts` por locale o duplicar `content/**/*.es.md`.
 - ⏳ **OG image** branded (1200×630) referenciado en `nuxt.config.ts` head.
 - ⏳ **Sitemap** (`@nuxtjs/sitemap`) + actualizar `public/robots.txt` con el dominio real.
 - ⏳ **Imágenes de proyectos** (screenshots / diagramas) vía `@nuxt/image`.
