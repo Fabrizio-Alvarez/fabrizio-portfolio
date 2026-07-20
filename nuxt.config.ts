@@ -3,7 +3,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
 
-  modules: ['@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxtjs/tailwindcss'],
+
+  // Site URL used by @nuxtjs/sitemap and i18n for absolute canonical/hreflang URLs.
+  // Update after deploy if the production domain differs.
+  site: {
+    url: 'https://fabrizio-alvarez.vercel.app',
+  },
 
   // Static Site Generation — output a fully static site for Vercel/any host.
   ssr: true,
@@ -72,6 +78,10 @@ export default defineNuxtConfig({
           content: 'Backend & Product Engineer scaling a multi-country healthcare SaaS.',
         },
         { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: '/og.png' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Fabrizio Álvarez — Backend Software Engineer' },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [

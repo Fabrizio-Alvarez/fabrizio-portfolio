@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f1f23"/>
+      <stop offset="100%" stop-color="#141416"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#2a2a2e"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#dots)" opacity="0.6"/>
+
+  <rect x="0" y="0" width="6" height="630" fill="#2c3e50"/>
+
+  <rect x="80" y="76" width="110" height="110" rx="22" fill="#2c3e50"/>
+  <text x="135" y="131" dy="4" text-anchor="middle" dominant-baseline="central"
+        font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="68" font-weight="700" fill="#ffffff">F</text>
+
+  <text x="80" y="248"
+        font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="20" font-weight="500" fill="#5a7a9a" letter-spacing="3">FABRIZIO ALVAREZ</text>
+
+  <text x="80" y="312"
+        font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Backend that holds up</text>
+  <text x="80" y="376"
+        font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#ffffff">under real load.</text>
+
+  <line x1="80" y1="448" x2="1120" y2="448" stroke="#2e2e32" stroke-width="1"/>
+
+  <g font-family="'Consolas', 'Cascadia Mono', monospace" font-size="22" font-weight="500" fill="#cfcfd4">
+    <text x="80" y="498">5 yrs</text>
+    <text x="200" y="498">30k/day</text>
+    <text x="350" y="498">5 countries</text>
+    <text x="540" y="498">30s -&gt; 2s</text>
+  </g>
+
+  <text x="80" y="566"
+        font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="20" font-weight="400" fill="#7a7a82">
+    PHP / Laravel specialist  ·  EMR SaaS for 5 countries  ·  Open to remote roles
+  </text>
+
+  <text x="1120" y="566" text-anchor="end"
+        font-family="'Consolas', monospace" font-size="18" font-weight="400" fill="#4a4a52">
+    fabrizio-alvarez
+  </text>
+</svg>
