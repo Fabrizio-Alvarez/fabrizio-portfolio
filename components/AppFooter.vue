@@ -1,5 +1,8 @@
 <script setup lang="ts">
-defineProps<{ site: { fullName: string; role: string; email: string; github: string; linkedin: string }; nav: { label: string; to: string }[] }>()
+defineProps<{
+  site: { fullName: string; role: string; email: string; github: string; linkedin: string }
+  nav: { label: string; to: string }[]
+}>()
 const year = new Date().getFullYear()
 </script>
 

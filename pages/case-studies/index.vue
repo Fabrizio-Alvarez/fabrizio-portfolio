@@ -1,16 +1,19 @@
 <script setup lang="ts">
-const { data: caseStudies } = await useAsyncData('case-studies-list', () =>
-  queryContent('/case-studies').sort({ order: 1 }).find(),
+const { locale, t } = useI18n()
+const contentPath = useContentPath()
+const { data: caseStudies } = await useAsyncData(
+  'case-studies-list',
+  () => queryContent(contentPath('/case-studies')).sort({ order: 1 }).find(),
+  { watch: [locale] },
 )
-useHead({ title: 'Case studies — Fabrizio Álvarez' })
+useHead({ title: () => t('seo.caseStudiesTitle') })
 </script>
 
 <template>
   <div class="container-content py-16">
-    <SectionHeading eyebrow="Commercial impact" title="Case studies" />
+    <SectionHeading :eyebrow="t('ui.commercialImpact')" :title="t('ui.caseStudies')" />
     <p class="text-mute max-w-2xl mt-4 mb-10 leading-relaxed">
-      Sanitized write-ups of 5 years on a multi-country healthcare SaaS (EMR) —
-      the problem, the technical decisions, and the outcome. No proprietary code.
+      {{ t('ui.caseStudiesDesc') }}
     </p>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       <CaseStudyCard

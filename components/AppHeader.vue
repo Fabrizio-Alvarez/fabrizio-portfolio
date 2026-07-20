@@ -1,18 +1,30 @@
 <script setup lang="ts">
-defineProps<{ site: { name: string; fullName: string }; nav: { label: string; to: string }[] }>()
+defineProps<{
+  site: { name: string; fullName: string }
+  nav: { label: string; to: string }[]
+}>()
+
+const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+
+// The "other" locale — what the toggle takes you to.
+const otherLocale = computed(() => {
+  const all = locales.value as Array<{ code: string; name: string }>
+  return all.find((l) => l.code !== locale.value) ?? null
+})
 </script>
 
 <template>
   <header class="sticky top-0 z-50 border-b border-line bg-white/80 backdrop-blur">
     <div class="container-content h-16 flex items-center justify-between gap-4">
-      <NuxtLink
+      <NuxtLinkLocale
         to="/"
         class="font-semibold text-ink hover:text-accent transition-colors tracking-tight"
       >
         {{ site.name }}
-      </NuxtLink>
+      </NuxtLinkLocale>
       <nav class="flex items-center gap-5 sm:gap-7 text-sm">
-        <NuxtLink
+        <NuxtLinkLocale
           v-for="item in nav"
           :key="item.to"
           :to="item.to"
@@ -20,6 +32,14 @@ defineProps<{ site: { name: string; fullName: string }; nav: { label: string; to
           active-class="text-ink font-medium"
         >
           {{ item.label }}
+        </NuxtLinkLocale>
+        <NuxtLink
+          v-if="otherLocale"
+          :to="switchLocalePath(otherLocale.code)"
+          class="text-mute hover:text-ink transition-colors whitespace-nowrap font-mono text-xs uppercase tracking-wider"
+          :aria-label="`Switch to ${otherLocale.name}`"
+        >
+          {{ otherLocale.code }}
         </NuxtLink>
       </nav>
     </div>

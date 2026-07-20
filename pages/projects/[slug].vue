@@ -1,39 +1,47 @@
 <script setup lang="ts">
 const route = useRoute()
-const { data: project } = await useAsyncData(`project-${route.params.slug}`, () =>
-  queryContent('/projects', route.params.slug as string).findOne(),
+const { locale, t } = useI18n()
+const contentPath = useContentPath()
+
+const { data: project } = await useAsyncData(
+  `project-${route.params.slug}`,
+  () => queryContent(contentPath('/projects'), route.params.slug as string).findOne(),
+  { watch: [locale] },
 )
 
 if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found', fatal: true })
 }
 
-const { data: more } = await useAsyncData(`project-${route.params.slug}-more`, () =>
-  queryContent('/projects')
-    .where({ _path: { $ne: project.value!._path } })
-    .sort({ order: 1 })
-    .limit(2)
-    .find(),
+const { data: more } = await useAsyncData(
+  `project-${route.params.slug}-more`,
+  () =>
+    queryContent(contentPath('/projects'))
+      .where({ _path: { $ne: project.value!._path } })
+      .sort({ order: 1 })
+      .limit(2)
+      .find(),
+  { watch: [locale] },
 )
 
 useHead({
-  title: `${project.value.title} — Fabrizio Álvarez`,
-  meta: [{ name: 'description', content: project.value.summary || '' }],
+  title: () => `${project.value?.title ?? ''} — Fabrizio Álvarez`,
+  meta: [{ name: 'description', content: () => project.value?.summary || '' }],
 })
 </script>
 
 <template>
   <article v-if="project" class="container-content py-16">
-    <NuxtLink
+    <NuxtLinkLocale
       to="/projects"
       class="text-sm text-accent hover:text-ink transition-colors mb-8 inline-block"
     >
-      ← All projects
-    </NuxtLink>
+      {{ t('ui.allProjectsLink') }}
+    </NuxtLinkLocale>
 
     <header class="mb-10">
       <p class="text-xs font-mono uppercase tracking-widest text-accent mb-2">
-        {{ project.role || 'Author' }}<span v-if="project.year"> · {{ project.year }}</span>
+        {{ project.role || t('ui.author') }}<span v-if="project.year"> · {{ project.year }}</span>
       </p>
       <h1 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight">{{ project.title }}</h1>
       <p class="mt-4 text-lg text-mute max-w-2xl leading-relaxed">{{ project.summary }}</p>
@@ -45,7 +53,7 @@ useHead({
           rel="noopener"
           class="text-sm font-medium text-ink border border-line rounded-md px-3 py-1.5 hover:border-ink transition-colors"
         >
-          GitHub →
+          {{ t('ui.githubLink') }} →
         </a>
         <a
           v-if="project.demo"
@@ -54,7 +62,7 @@ useHead({
           rel="noopener"
           class="text-sm font-medium text-white bg-ink rounded-md px-3 py-1.5 hover:bg-accent transition-colors"
         >
-          Live demo →
+          {{ t('ui.liveDemo') }} →
         </a>
         <div v-if="project.stack?.length" class="flex flex-wrap gap-1.5">
           <span
@@ -71,7 +79,7 @@ useHead({
     </div>
 
     <div v-if="more && more.length" class="mt-16 pt-10 border-t border-line">
-      <SectionHeading eyebrow="More" title="Other projects" />
+      <SectionHeading :eyebrow="t('ui.more')" :title="t('ui.otherProjects')" />
       <div class="grid gap-5 sm:grid-cols-2 mt-6">
         <ProjectCard
           v-for="p in more"

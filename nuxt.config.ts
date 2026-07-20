@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
 
-  modules: ['@nuxt/content', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
 
   // Static Site Generation — output a fully static site for Vercel/any host.
   ssr: true,
@@ -12,6 +12,29 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: ['/', '/projects', '/case-studies', '/about', '/contact'],
       failOnError: false,
+    },
+  },
+
+  i18n: {
+    // English is the default locale with NO URL prefix (clean URLs for the primary
+    // international audience); Spanish lives under /es/*.
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'es', language: 'es-AR', name: 'Español', file: 'es.json' },
+    ],
+    lazy: true,
+    langDir: 'locales',
+    baseUrl: 'https://fabrizio-alvarez.vercel.app',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      redirectOn: 'root',
+      alwaysRedirect: false,
+    },
+    bundle: {
+      optimizeTranslationDirective: false,
     },
   },
 
@@ -33,7 +56,6 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      htmlAttrs: { lang: 'en' },
       title: 'Fabrizio Álvarez — Backend Software Engineer',
       meta: [
         { charset: 'utf-8' },

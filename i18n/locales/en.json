@@ -1,0 +1,101 @@
+{
+  "site": {
+    "role": "Backend Software Engineer · Product Engineer",
+    "availableFor": "Open to remote roles — backend, platform, product engineering."
+  },
+  "nav": {
+    "work": "Work",
+    "caseStudies": "Case studies",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Backend Software Engineer · Product Engineer",
+    "headline": "I build and scale PHP backends that stay fast under real load.",
+    "sub": "5 years engineering a multi-country healthcare SaaS (EMR) handling 30,000 appointments/day — performance optimization, payments, integrations, and testing strategy."
+  },
+  "metrics": {
+    "experience": { "value": "5 yrs", "label": "building & scaling a PHP SaaS" },
+    "throughput": { "value": "30k", "label": "daily appointments served" },
+    "countries": { "value": "5", "label": "countries in production" },
+    "perf": { "value": "30s → 2s", "label": "critical query optimization" }
+  },
+  "skillGroups": {
+    "languages": "Languages & databases",
+    "architecture": "Architecture",
+    "testing": "Testing & CI/CD",
+    "performance": "Performance",
+    "integrations": "Integrations",
+    "other": "Other"
+  },
+  "languages": {
+    "spanishNative": "Spanish — native",
+    "englishC1": "English — advanced (C1)"
+  },
+  "channels": {
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "phone": "Phone",
+    "location": "Location"
+  },
+  "ui": {
+    "viewWork": "View my work",
+    "getInTouch": "Get in touch",
+    "moreAboutMe": "More about me",
+    "selectedWork": "Selected work",
+    "projects": "Projects",
+    "commercialImpact": "Commercial impact",
+    "caseStudies": "Case studies",
+    "allProjects": "All projects",
+    "allCaseStudies": "All case studies",
+    "allProjectsLink": "← All projects",
+    "allCaseStudiesLink": "← All case studies",
+    "lookingForEngineer": "Looking for a backend engineer?",
+    "githubLink": "GitHub",
+    "liveDemo": "Live demo",
+    "author": "Author",
+    "more": "More",
+    "otherProjects": "Other projects",
+    "open": "open",
+    "letsTalk": "Let's talk",
+    "preferEmail": "Prefer email?",
+    "dropLine": "Drop me a line and I'll get back to you.",
+    "contactLead": "The fastest way to reach me is email — I usually reply within a day.",
+    "contactEyebrow": "Contact",
+    "aboutEyebrow": "About",
+    "stackEyebrow": "Stack",
+    "skills": "Skills",
+    "languageListHeader": "Languages",
+    "backendHoldsUp": "Backend that holds up under load",
+    "projectsDesc": "Side projects and architecture studies. Each one is built to be defended in an interview — real domain, framework-agnostic core, tests, Docker, and CI.",
+    "caseStudiesDesc": "Sanitized write-ups of 5 years on a multi-country healthcare SaaS (EMR) — the problem, the technical decisions, and the outcome. No proprietary code.",
+    "langSwitchTo": "Español",
+    "langAria": "Switch to Spanish"
+  },
+  "about": {
+    "p1": "I'm a Backend Software Engineer and Product Engineer with 5 years of experience designing, building, and scaling high-availability PHP systems for a multi-country healthcare SaaS. I specialize in turning vague business needs into appropriate technical solutions — and keeping them fast under real production load.",
+    "p2": "Most of my work has been on an EMR used across five countries by clinics processing up to 30,000 appointments a day. That scale taught me to care about the boring, load-bearing things: query plans, idempotency, retries, and tests you can trust.",
+    "whatIDo": "What I actually do",
+    "feature": "Feature development",
+    "featureDesc": " — from understanding the business need and defining the technical solution through implementation and testing.",
+    "performance": "Performance optimization",
+    "performanceDesc": " — profiling production databases (AWS Aurora), eliminating N+1 queries, designing composite indexes, and refactoring slow queries. Best-known win: a critical query from ",
+    "performanceWinFrom": "30s",
+    "performanceWinTo": " ~2s",
+    "testing": "Testing strategy & quality engineering",
+    "testingDesc": " — migrated the backend suite to Pest and built an AI-assisted E2E methodology on Playwright, wired into CI.",
+    "integrations": "Integrations & payments",
+    "integrationsDesc": " — MercadoPago QR, multi-country electronic invoicing, and RIS/LIS bridges, with idempotency and signature verification treated as defaults.",
+    "p3": "I'm fluent in Spanish (native) and English (advanced — C1), and I'm open to remote roles in backend, platform, or product engineering."
+  },
+  "seo": {
+    "homeTitleSuffix": " — Backend Software Engineer",
+    "projectsTitle": "Projects — Fabrizio Álvarez",
+    "caseStudiesTitle": "Case studies — Fabrizio Álvarez",
+    "aboutTitle": "About — Fabrizio Álvarez",
+    "contactTitle": "Contact — Fabrizio Álvarez",
+    "metaDescription": "Backend Software Engineer & Product Engineer. 5 years scaling a multi-country healthcare SaaS (30k appointments/day). PHP, Laravel, performance engineering, payments and integrations.",
+    "ogDescription": "Backend & Product Engineer scaling a multi-country healthcare SaaS."
+  }
+}

@@ -1,7 +1,12 @@
 <script setup lang="ts">
 const route = useRoute()
-const { data: caseStudy } = await useAsyncData(`case-study-${route.params.slug}`, () =>
-  queryContent('/case-studies', route.params.slug as string).findOne(),
+const { locale, t } = useI18n()
+const contentPath = useContentPath()
+
+const { data: caseStudy } = await useAsyncData(
+  `case-study-${route.params.slug}`,
+  () => queryContent(contentPath('/case-studies'), route.params.slug as string).findOne(),
+  { watch: [locale] },
 )
 
 if (!caseStudy.value) {
@@ -9,19 +14,19 @@ if (!caseStudy.value) {
 }
 
 useHead({
-  title: `${caseStudy.value.title} — Fabrizio Álvarez`,
-  meta: [{ name: 'description', content: caseStudy.value.summary || '' }],
+  title: () => `${caseStudy.value?.title ?? ''} — Fabrizio Álvarez`,
+  meta: [{ name: 'description', content: () => caseStudy.value?.summary || '' }],
 })
 </script>
 
 <template>
   <article v-if="caseStudy" class="container-content py-16 max-w-3xl">
-    <NuxtLink
+    <NuxtLinkLocale
       to="/case-studies"
       class="text-sm text-accent hover:text-ink transition-colors mb-8 inline-block"
     >
-      ← All case studies
-    </NuxtLink>
+      {{ t('ui.allCaseStudiesLink') }}
+    </NuxtLinkLocale>
 
     <header class="mb-10">
       <p v-if="caseStudy.area" class="text-xs font-mono uppercase tracking-widest text-accent mb-2">

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { site, nav } = useSite()
+const head = useLocaleHead()
+useHead(head)
 </script>
 
 <template>

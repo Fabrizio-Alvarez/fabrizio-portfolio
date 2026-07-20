@@ -1,16 +1,19 @@
 <script setup lang="ts">
-const { data: projects } = await useAsyncData('projects-list', () =>
-  queryContent('/projects').sort({ order: 1 }).find(),
+const { locale, t } = useI18n()
+const contentPath = useContentPath()
+const { data: projects } = await useAsyncData(
+  'projects-list',
+  () => queryContent(contentPath('/projects')).sort({ order: 1 }).find(),
+  { watch: [locale] },
 )
-useHead({ title: 'Projects — Fabrizio Álvarez' })
+useHead({ title: () => t('seo.projectsTitle') })
 </script>
 
 <template>
   <div class="container-content py-16">
-    <SectionHeading eyebrow="Selected work" title="Projects" />
+    <SectionHeading :eyebrow="t('ui.selectedWork')" :title="t('ui.projects')" />
     <p class="text-mute max-w-2xl mt-4 mb-10 leading-relaxed">
-      Side projects and architecture studies. Each one is built to be defended in an
-      interview — real domain, framework-agnostic core, tests, Docker, and CI.
+      {{ t('ui.projectsDesc') }}
     </p>
     <div class="grid gap-5 sm:grid-cols-2">
       <ProjectCard

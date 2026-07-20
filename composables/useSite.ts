@@ -1,6 +1,8 @@
 // Central source of truth for site-wide copy and structured data.
-// Bilingual (es/en) is a phase-2 follow-up: swap this object by locale.
-// Source: fabrizio-career/cv-redone-es.md + case-studies/
+// Bilingual (en default · es) via @nuxtjs/i18n. Strings live in i18n/locales/{en,es}.json;
+// this composable re-exposes them reactively alongside non-translatable data
+// (contact info, technical skill items, channel hrefs).
+// Source: fabrizio-career/cv-fabrizio-es.md + case-studies/
 
 interface NavItem {
   label: string
@@ -17,55 +19,89 @@ interface SkillGroup {
   items: string[]
 }
 
+interface Channel {
+  label: string
+  value: string
+  href: string
+}
+
+// Static (non-translatable) data — names, contacts, technical skill items.
+const fullName = 'Fabrizio Nicolás Álvarez'
+const name = 'Fabrizio Álvarez'
+const email = 'fabrizioalvrz@gmail.com'
+const phone = '+54 3487 632294'
+const phoneHref = 'tel:+543487632294'
+const githubUrl = 'https://github.com/Fabrizio-Alvarez'
+const linkedinUrl = 'https://www.linkedin.com/in/fabrizio-alvarez'
+const location = 'Buenos Aires, Argentina'
+
+// Skill items are technical terms — same across locales.
+const skillItems: Record<string, string[]> = {
+  languages: ['PHP (7, 8.3)', 'MySQL', 'TypeScript', 'Node.js'],
+  architecture: ['Domain-Driven Design', 'SOLID', 'PSR standards', 'REST API design'],
+  testing: ['Pest', 'PHPUnit', 'Playwright (E2E)', 'GitHub Actions', 'Sentry'],
+  performance: ['N+1 elimination', 'Composite indexes', 'Query refactoring', 'Profiling (AWS Aurora)'],
+  integrations: ['Payments (MercadoPago)', 'Electronic invoicing', 'RIS / LIS', 'Third-party APIs'],
+  other: ['Laravel', 'CodeIgniter', 'Docker', 'AWS (basic)'],
+}
+
+const channelData = [
+  { key: 'email', value: email, href: `mailto:${email}` },
+  { key: 'github', value: '@Fabrizio-Alvarez', href: githubUrl },
+  { key: 'linkedin', value: 'in/fabrizio-alvarez', href: linkedinUrl },
+  { key: 'phone', value: phone, href: phoneHref },
+  { key: 'location', value: location, href: '' },
+]
+
 export const useSite = () => {
-  const site = {
-    name: 'Fabrizio Álvarez',
-    fullName: 'Fabrizio Nicolás Álvarez',
-    role: 'Backend Software Engineer · Product Engineer',
-    location: 'Buenos Aires, Argentina',
-    email: 'fabrizioalvrz@gmail.com',
-    phone: '+54 3487 632294',
-    github: 'https://github.com/Fabrizio-Alvarez',
-    linkedin: 'https://www.linkedin.com/in/fabrizio-alvarez',
-    availableFor: 'Open to remote roles — backend, platform, product engineering.',
-  }
+  const { t, tm } = useI18n()
 
-  const nav: NavItem[] = [
-    { label: 'Work', to: '/projects' },
-    { label: 'Case studies', to: '/case-studies' },
-    { label: 'About', to: '/about' },
-    { label: 'Contact', to: '/contact' },
-  ]
+  const site = computed(() => ({
+    name,
+    fullName,
+    email,
+    phone,
+    github: githubUrl,
+    linkedin: linkedinUrl,
+    location,
+    role: t('site.role'),
+    availableFor: t('site.availableFor'),
+  }))
 
-  const hero = {
-    eyebrow: 'Backend Software Engineer · Product Engineer',
-    headline: 'I build and scale PHP backends that stay fast under real load.',
-    sub: "5 years engineering a multi-country healthcare SaaS (EMR) handling 30,000 appointments/day — performance optimization, payments, integrations, and testing strategy.",
-  }
+  const nav = computed<NavItem[]>(() => [
+    { label: t('nav.work'), to: '/projects' },
+    { label: t('nav.caseStudies'), to: '/case-studies' },
+    { label: t('nav.about'), to: '/about' },
+    { label: t('nav.contact'), to: '/contact' },
+  ])
 
-  const metrics: Metric[] = [
-    { value: '5 yrs', label: 'building & scaling a PHP SaaS' },
-    { value: '30k', label: 'daily appointments served' },
-    { value: '5', label: 'countries in production' },
-    { value: '30s → 2s', label: 'critical query optimization' },
-  ]
+  const hero = computed(() => ({
+    eyebrow: t('hero.eyebrow'),
+    headline: t('hero.headline'),
+    sub: t('hero.sub'),
+  }))
 
-  const skills: SkillGroup[] = [
-    { group: 'Languages & databases', items: ['PHP (7, 8.3)', 'MySQL', 'TypeScript', 'Node.js'] },
-    { group: 'Architecture', items: ['Domain-Driven Design', 'SOLID', 'PSR standards', 'REST API design'] },
-    { group: 'Testing & CI/CD', items: ['Pest', 'PHPUnit', 'Playwright (E2E)', 'GitHub Actions', 'Sentry'] },
-    { group: 'Performance', items: ['N+1 elimination', 'Composite indexes', 'Query refactoring', 'Profiling (AWS Aurora)'] },
-    { group: 'Integrations', items: ['Payments (MercadoPago)', 'Electronic invoicing', 'RIS / LIS', 'Third-party APIs'] },
-    { group: 'Other', items: ['Laravel', 'CodeIgniter', 'Docker', 'AWS (basic)'] },
-  ]
+  const metrics = computed<Metric[]>(() => [
+    tm('metrics.experience') as Metric,
+    tm('metrics.throughput') as Metric,
+    tm('metrics.countries') as Metric,
+    tm('metrics.perf') as Metric,
+  ])
 
-  const channels = [
-    { label: 'Email', value: site.email, href: `mailto:${site.email}` },
-    { label: 'GitHub', value: '@Fabrizio-Alvarez', href: site.github },
-    { label: 'LinkedIn', value: 'in/fabrizio-alvarez', href: site.linkedin },
-    { label: 'Phone', value: site.phone, href: `tel:${site.phone.replace(/\s/g, '')}` },
-    { label: 'Location', value: site.location, href: '' },
-  ]
+  const skills = computed<SkillGroup[]>(() =>
+    Object.entries(skillItems).map(([key, items]) => ({
+      group: t(`skillGroups.${key}`),
+      items,
+    })),
+  )
+
+  const channels = computed<Channel[]>(() =>
+    channelData.map((c) => ({
+      label: t(`channels.${c.key}`),
+      value: c.value,
+      href: c.href,
+    })),
+  )
 
   return { site, nav, hero, metrics, skills, channels }
 }
