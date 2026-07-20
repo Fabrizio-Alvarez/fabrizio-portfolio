@@ -57,11 +57,12 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 
 ## Estado actual (verificado 2026-07-20)
 
-- ✅ SSG build limpio: **67 rutas** prerenderizadas (dobladas: en + `/es/*`), 0 errores.
+- ✅ SSG build limpio: **74 rutas** prerenderizadas (67 site + sitemap_index + 2 sitemaps locale + style.xsl), 0 errores.
 - ✅ Smoke test sobre el build: titles, html lang, hreflang + canonical, contenido localizado verificados en ambas locales.
 - ✅ **Bilingüe es/en completo** — `@nuxtjs/i18n` `prefix_except_default` (`/` en, `/es/*` es). Lang switcher en header. SEO hreflang completo (x-default, en, en-US, es, es-AR).
+- ✅ **SEO bundle completo**: OG image branded 1200×630 (`public/og.png`, source `og.svg`, regenerable con `npm run gen:og` vía `scripts/gen-og.mjs`); `@nuxtjs/sitemap` con sitemaps por locale + hreflang alternates; `robots.txt` con URL absoluta.
 - ✅ Hidratación correcta: `_payload.json` por ruta + `/api/_content/query/*.json`.
-- ✅ Git init + commit inicial (`82ad1f7`) + commit bilingüe (`70c2642`).
+- ✅ Git history: `82ad1f7` (init) · `70c2642` (bilingüe) · `932cc9a` (SEO bundle).
 - ✅ Contenido **real** del CV (no placeholders). Traducciones ES con terminología argentina oficial.
 
 ## Decisiones de stack y contenido
@@ -74,10 +75,11 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 - **Markdown-driven** (`@nuxt/content`): sumar proyecto = dropear un `.md`.
 - **Métricas hard** en el home (5 yrs · 30k/día · 5 países · 30s→2s) para romper el "PHP legacy".
 - **Bilingüe es/en** vía `@nuxtjs/i18n` (`prefix_except_default`): `/` = en (sin prefijo, audiencia principal), `/es/*` = español. Content split por directorio (`content/{projects,case-studies}/*.md` para en, `content/es/...` para es). SEO hreflang completo (x-default/en/en-US/es/es-AR) vía `useLocaleHead`.
+- **OG image branded** (`public/og.png` 1200×630, monograma F + headline + métricas) generado desde SVG inline con sharp (`scripts/gen-og.mjs`). Mismo lenguaje visual que el favicon.
+- **Sitemap automático** vía `@nuxtjs/sitemap` con `site.url` configurado: `sitemap_index.xml` + un sitemap por locale, cada URL con `xhtml:link` hreflang alternates para Google.
 
 ### Lo que NO (por ahora)
 - ❌ Dark mode, animaciones, mobile menu → YAGNI para v1 (el header wrapea bien en mobile con 4 items).
-- ❌ `@nuxt/image`, OG image → fase 2 (sin imágenes todavía).
 
 ---
 
@@ -119,8 +121,6 @@ Aparece solo en `/projects` y genera su `/projects/mi-proyecto`. Para que exista
 ## Pendientes (fase 2)
 
 - ⏳ **Push a GitHub + deploy Vercel** (pasos exactos en `DEPLOY.md`).
-- ⏳ **OG image** branded (1200×630) referenciado en `nuxt.config.ts` head.
-- ⏳ **Sitemap** (`@nuxtjs/sitemap`) + actualizar `public/robots.txt` con el dominio real.
 - ⏳ **Imágenes de proyectos** (screenshots / diagramas) vía `@nuxt/image`.
 - ⏳ Cuando esté deployado: linkear el portfolio desde el README del perfil GitHub + el CV.
 

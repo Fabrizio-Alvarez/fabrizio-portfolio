@@ -7,7 +7,8 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "gen:og": "node scripts/gen-og.mjs"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.0",
