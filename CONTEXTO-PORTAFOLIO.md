@@ -121,7 +121,13 @@ Aparece solo en `/projects` y genera su `/projects/mi-proyecto`. Para que exista
 ## Pendientes (fase 2)
 
 - ⏳ **Push a GitHub + deploy Vercel** (pasos exactos en `DEPLOY.md`).
-- ⏳ **Imágenes de proyectos** (screenshots / diagramas) vía `@nuxt/image`.
+- ✅ **Diagramas técnicos** — 5 SVGs inline en `public/diagrams/`, referenciados desde EN y ES:
+  - `supermarket-stock-ddd.svg` — capas DDD (Presentation → Application → Domain ← Infrastructure).
+  - `job-tracker-state.svg` — state machine de application status.
+  - `qa-flow.svg` — AI agent → Playwright → CI feedback loop (métricas inline).
+  - `payments-webhook.svg` — signature verify → idempotency → handler.
+  - `perf-query.svg` — before/after query plan (30s → ~2s, ~15×).
+  - Labels técnicos en inglés, compartidos entre locales. Commit `dd19862`.
 - ⏳ Cuando esté deployado: linkear el portfolio desde el README del perfil GitHub + el CV.
 
 ---
