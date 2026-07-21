@@ -1,0 +1,51 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Webhook ingestion with idempotency and signature verification</title>
+  <desc id="d1">Inbound webhook: signature verified first, then idempotency key dedupes redeliveries before the handler commits state.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2c3e50"/>
+    </marker>
+    <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <!-- Source -->
+  <rect x="20" y="150" width="120" height="60" rx="6" fill="#fff" stroke="#cfd3d8" stroke-width="1.5"/>
+  <text x="80" y="178" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1a1a1a">MercadoPago</text>
+  <text x="80" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#666">QR · webhook</text>
+
+  <line x1="140" y1="180" x2="180" y2="180" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 1: signature verify -->
+  <rect x="180" y="150" width="140" height="60" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <text x="250" y="174" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#2c3e50">verify signature</text>
+  <text x="250" y="194" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#666">reject if invalid</text>
+
+  <!-- Reject path -->
+  <line x1="250" y1="210" x2="250" y2="270" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-bad)"/>
+  <text x="260" y="245" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#888">invalid → 401</text>
+
+  <line x1="320" y1="180" x2="360" y2="180" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 2: idempotency -->
+  <rect x="360" y="150" width="140" height="60" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <text x="430" y="174" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#2c3e50">idempotency check</text>
+  <text x="430" y="194" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#666">dedupe by key</text>
+
+  <!-- Already-processed path -->
+  <line x1="430" y1="210" x2="430" y2="270" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-bad)"/>
+  <text x="440" y="245" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#888">seen → 200 (no-op)</text>
+
+  <line x1="500" y1="180" x2="540" y2="180" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 3: handler -->
+  <rect x="540" y="150" width="160" height="60" rx="6" fill="#fff" stroke="#cfd3d8" stroke-width="1.5"/>
+  <text x="620" y="174" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1a1a1a">handler</text>
+  <text x="620" y="194" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#666">commits state · fires side-effects</text>
+
+  <!-- Top label: invariants -->
+  <text x="360" y="50" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1a1a1a">Treat &quot;duplicate / malformed events will arrive&quot; as the default</text>
+  <line x1="80" y1="70" x2="640" y2="70" stroke="#cfd3d8" stroke-width="1"/>
+  <text x="430" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#666">+16,000 lines · 94 files · production across 5 countries</text>
+</svg>

@@ -33,6 +33,9 @@ kind of side project: one I genuinely use (dogfooding).
 
 ## Architecture decisions
 
+![Application status state machine](/diagrams/job-tracker-state.svg)
+
+
 - **Fastify** over Express — schema-based validation out of the box and a tighter
   typed surface, which matters when the whole point is correctness.
 - **Prisma** for data access — typed queries and migrations without hand-rolling SQL.

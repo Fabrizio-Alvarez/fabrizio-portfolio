@@ -1,0 +1,41 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1 d1">
+  <title id="t1">AI-assisted E2E methodology</title>
+  <desc id="d1">The AI agent generates specs from feature descriptions, the Playwright harness runs them, and CI enforces coverage on every change.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2c3e50"/>
+    </marker>
+    <marker id="arr-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: AI agent -->
+  <rect x="30" y="60" width="160" height="100" rx="8" fill="#fff" stroke="#cfd3d8" stroke-width="1.5"/>
+  <text x="110" y="92" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">AI agent</text>
+  <text x="110" y="115" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#666">feature brief →</text>
+  <text x="110" y="132" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#666">Playwright specs</text>
+  <text x="110" y="148" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#888">+48k lines</text>
+
+  <!-- Step 2: Playwright harness -->
+  <rect x="240" y="60" width="160" height="100" rx="8" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <text x="320" y="92" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#2c3e50">Playwright harness</text>
+  <text x="320" y="115" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#666">shared helpers</text>
+  <text x="320" y="132" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#666">config · pilot-module</text>
+  <text x="320" y="148" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#888">1,414 files</text>
+
+  <!-- Step 3: CI -->
+  <rect x="450" y="60" width="160" height="100" rx="8" fill="#fff" stroke="#cfd3d8" stroke-width="1.5"/>
+  <text x="530" y="92" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">CI · GitHub Actions</text>
+  <text x="530" y="115" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#666">runs on every PR</text>
+  <text x="530" y="132" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#666">+actionlint</text>
+  <text x="530" y="148" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#888">Sentry monitoring</text>
+
+  <!-- Arrows forward -->
+  <line x1="190" y1="110" x2="240" y2="110" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="400" y1="110" x2="450" y2="110" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Feedback loop: failures → agent regenerates/maintains -->
+  <path d="M 530 160 Q 530 240 320 240 Q 110 240 110 160" stroke="#888" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arr-back)"/>
+  <text x="320" y="262" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-style="italic" fill="#888">failures &amp; drift fed back to the agent — coverage is maintained, not generated once</text>
+</svg>

@@ -8,6 +8,8 @@ order: 2
 > Sanitized excerpt of commercial work on **Salutte2 (Alephoo HDE)**. No proprietary
 > code is disclosed.
 
+![Webhook idempotency flow](/diagrams/payments-webhook.svg)
+
 ## Context
 
 An EMR product expanding into new payment flows and external systems. Each

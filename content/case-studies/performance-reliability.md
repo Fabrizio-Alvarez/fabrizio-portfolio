@@ -9,6 +9,8 @@ order: 3
 > where some clinics process up to 30,000 appointments/day. No proprietary code is
 > disclosed.
 
+![Slow query optimization: 30s to ~2s](/diagrams/perf-query.svg)
+
 ## Context
 
 At scale, a few slow queries and a couple of corrupt-cache incidents degraded the

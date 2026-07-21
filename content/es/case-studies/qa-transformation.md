@@ -8,6 +8,8 @@ order: 1
 > Extracto sanitizado de trabajo comercial en **Salutte2 (Alephoo HDE)** — un SaaS
 > de historia clínica electrónica usado en 5 países. No se divulga código propietario.
 
+![Flujo E2E asistido por IA](/diagrams/qa-flow.svg)
+
 ## Contexto
 
 Un codebase PHP grande y maduro (CodeIgniter 3, jQuery) con una suite de tests acotada

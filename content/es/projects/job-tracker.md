@@ -34,6 +34,9 @@ uso (dogfooding).
 
 ## Decisiones de arquitectura
 
+![State machine de status de la aplicación](/diagrams/job-tracker-state.svg)
+
+
 - **Fastify** por sobre Express — validación basada en esquemas out of the box
   y una superficie tipada más ajustada, lo cual importa cuando el punto central
   es la corrección.

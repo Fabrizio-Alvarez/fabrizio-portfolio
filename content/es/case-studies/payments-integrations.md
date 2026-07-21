@@ -8,6 +8,8 @@ order: 2
 > Extracto sanitizado de trabajo comercial en **Salutte2 (Alephoo HDE)**. No se
 > divulga código propietario.
 
+![Flujo de idempotencia de webhook](/diagrams/payments-webhook.svg)
+
 ## Contexto
 
 Un producto de historia clínica electrónica en expansión hacia nuevos flujos de

@@ -27,6 +27,9 @@ PHP core that can survive a framework swap.
 
 The code is split so the business logic never learns about Laravel:
 
+![DDD in layers](/diagrams/supermarket-stock-ddd.svg)
+
+
 - **Domain** — pure PHP. Entities, value objects, and domain services. No framework
   imports, no Eloquent, no HTTP. This is the part tested in isolation.
 - **Application** — use cases (handlers) that orchestrate the domain and declare

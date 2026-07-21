@@ -1,0 +1,36 @@
+<svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1 d1">
+  <title id="t1">DDD in layers</title>
+  <desc id="d1">Layered architecture: dependencies point inward toward the Domain, which has no framework imports.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2c3e50"/>
+    </marker>
+    <marker id="arr-mute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="20" width="640" height="60" rx="6" fill="#fff" stroke="#cfd3d8" stroke-width="1.5"/>
+  <text x="60" y="48" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1a1a1a">Presentation</text>
+  <text x="60" y="68" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#666">REST API — HTTP controllers, request validation, response shaping</text>
+
+  <line x1="360" y1="82" x2="360" y2="98" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="40" y="100" width="640" height="60" rx="6" fill="#fff" stroke="#cfd3d8" stroke-width="1.5"/>
+  <text x="60" y="128" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1a1a1a">Application</text>
+  <text x="60" y="148" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#666">Use case handlers · declares transactions &amp; side-effects as interfaces</text>
+
+  <line x1="360" y1="162" x2="360" y2="178" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="40" y="180" width="640" height="80" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <text x="60" y="208" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#2c3e50">Domain — pure PHP, tested in isolation</text>
+  <text x="60" y="230" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#1a1a1a">Entities · Value Objects · Domain Services</text>
+  <text x="60" y="248" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#666">No framework imports · no Eloquent · no HTTP</text>
+
+  <rect x="40" y="290" width="640" height="60" rx="6" fill="#fff" stroke="#cfd3d8" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="60" y="318" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1a1a1a">Infrastructure</text>
+  <text x="60" y="338" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#666">Eloquent repositories · framework adapters · 3rd-party clients</text>
+
+  <line x1="640" y1="290" x2="640" y2="162" stroke="#888" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-mute)"/>
+  <text x="652" y="225" font-family="Inter, system-ui, sans-serif" font-size="11" font-style="italic" fill="#888">implements</text>
+</svg>

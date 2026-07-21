@@ -8,6 +8,8 @@ order: 1
 > Sanitized excerpt of commercial work on **Salutte2 (Alephoo HDE)** — an EMR SaaS
 > used across 5 countries. No proprietary code is disclosed.
 
+![AI-assisted E2E flow](/diagrams/qa-flow.svg)
+
 ## Context
 
 A large, mature PHP codebase (CodeIgniter 3, jQuery) with a thin, inconsistent

@@ -29,6 +29,9 @@ cambio de framework.
 El código está estructurado de forma que la lógica de negocio nunca dependa de
 Laravel:
 
+![DDD en capas](/diagrams/supermarket-stock-ddd.svg)
+
+
 - **Dominio** — PHP puro. Entidades, value objects y servicios de dominio. Sin
   imports del framework, sin Eloquent, sin HTTP. Esta es la parte que se testea
   de forma aislada.

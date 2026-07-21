@@ -9,6 +9,8 @@ order: 3
 > de historia clínica electrónica donde algunas clínicas procesan hasta 30.000
 > turnos/día. No se divulga código propietario.
 
+![Optimización de query lenta: 30s a ~2s](/diagrams/perf-query.svg)
+
 ## Contexto
 
 A escala, algunas queries lentas y un par de incidentes de caché corrupto
