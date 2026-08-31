@@ -2,4 +2,5 @@ name = "fabrizio-portfolio"
 compatibility_date = "2026-08-31"
 
 [assets]
-directory = "./.output/public"
+directory = "../.output/public"
+not_found_handling = "404-page"

@@ -11,9 +11,14 @@ export default defineNuxtConfig({
     url: 'https://falvarez.dev',
   },
 
-  // Static Site Generation — fully static output, hosted on Cloudflare Pages.
+  // Static Site Generation — fully static output, served as static assets on a
+  // Cloudflare Worker (deploy config: deploy/wrangler.toml). The explicit
+  // `preset: 'static'` stops Nitro from auto-switching to `cloudflare-module`
+  // when it sees a wrangler config, which would hijack the static deploy
+  // (Nitro then overrides `assets` and wrangler fails looking for index.mjs).
   ssr: true,
   nitro: {
+    preset: 'static',
     prerender: {
       crawlLinks: true,
       routes: ['/', '/projects', '/case-studies', '/about', '/contact'],
