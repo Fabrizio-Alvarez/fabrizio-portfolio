@@ -16,14 +16,15 @@ The current Cloudflare dashboard creates Git-connected projects as **Workers**
 that's why a bare repo fails with *"The entry-point file at index.mjs was not
 found"*.
 
-The repo declares itself a **pure static site** in `wrangler.jsonc`:
+The repo declares itself a **pure static site** in `wrangler.toml` (TOML, not
+`.jsonc` — every wrangler version reads TOML; only ≥ 3.91 reads JSONC):
 
-```jsonc
-{
-  "name": "fabrizio-portfolio",
-  "compatibility_date": "2026-08-31",
-  "assets": { "directory": "./.output/public" }   // no "main" → assets-only
-}
+```toml
+name = "fabrizio-portfolio"
+compatibility_date = "2026-08-31"
+
+[assets]
+directory = "./.output/public"
 ```
 
 `.node-version` (24) pins the build runtime. Node 24 matters for two reasons:
@@ -70,6 +71,6 @@ npx serve .output/public   # or: npm run preview   (Nuxt's static preview server
 
 ## 4. If the build ever shows `index.mjs not found` again
 
-It means the deploy didn't find the static-assets config: check `wrangler.jsonc`
-exists at the repo root with `assets.directory`, and that the build command is
+It means the deploy didn't find the static-assets config: check `wrangler.toml`
+exists at the repo root with `[assets] directory`, and that the build command is
 `npm run generate` (output `.output/public` must exist after build).
