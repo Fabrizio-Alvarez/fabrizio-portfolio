@@ -7,11 +7,11 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-white text-ink antialiased;
+    @apply bg-surface text-ink antialiased;
     font-feature-settings: 'cv11', 'ss01';
   }
   ::selection {
-    @apply bg-accent text-white;
+    @apply bg-violet text-white;
   }
 }
 

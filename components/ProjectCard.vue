@@ -6,6 +6,7 @@ defineProps<{
     summary: string
     year?: number | string
     stack?: string[]
+    demo?: string
   }
 }>()
 </script>
@@ -13,27 +14,29 @@ defineProps<{
 <template>
   <NuxtLink
     :to="project._path"
-    class="group block border border-line rounded-lg p-6 hover:border-accent hover:-translate-y-0.5 transition-all duration-200"
+    class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-2 border-t border-line py-7 hover:bg-deep/60 transition-colors px-2 -mx-2"
   >
-    <div class="flex items-start justify-between gap-4 mb-3">
-      <h3 class="text-lg font-semibold text-ink group-hover:text-accent transition-colors">
-        {{ project.title }}
-      </h3>
-      <span
-        v-if="project.year"
-        class="text-xs text-mute font-mono shrink-0 mt-1"
-      >{{ project.year }}</span>
+    <div class="min-w-0">
+      <div class="flex items-baseline gap-3 flex-wrap">
+        <h3
+          class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink group-hover:text-lav transition-colors"
+        >
+          {{ project.title }}
+        </h3>
+        <span
+          v-if="project.demo"
+          class="font-mono text-[11px] uppercase tracking-widest text-violet group-hover:text-lav transition-colors"
+        >
+          Live ↗
+        </span>
+      </div>
+      <p class="mt-2 text-sm text-mute leading-relaxed max-w-2xl">{{ project.summary }}</p>
+      <p v-if="project.stack?.length" class="mt-3 font-mono text-[11px] text-lav/90 tracking-wide">
+        <span v-for="(tech, i) in project.stack.slice(0, 5)" :key="tech">
+          {{ tech }}<span v-if="i < Math.min(project.stack.length, 5) - 1" class="text-line"> · </span>
+        </span>
+      </p>
     </div>
-    <p class="text-sm text-mute mb-4 leading-relaxed">{{ project.summary }}</p>
-    <div
-      v-if="project.stack?.length"
-      class="flex flex-wrap gap-1.5"
-    >
-      <span
-        v-for="tech in project.stack.slice(0, 5)"
-        :key="tech"
-        class="text-xs px-2 py-0.5 bg-ink/5 text-ink/70 rounded font-mono"
-      >{{ tech }}</span>
-    </div>
+    <span v-if="project.year" class="font-mono text-xs text-mute shrink-0">{{ project.year }}</span>
   </NuxtLink>
 </template>

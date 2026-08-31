@@ -10,19 +10,18 @@ defineProps<{
 </script>
 
 <template>
-  <NuxtLink
-    :to="caseStudy._path"
-    class="group flex flex-col border border-line rounded-lg p-6 hover:border-accent hover:-translate-y-0.5 transition-all duration-200"
-  >
+  <NuxtLink :to="caseStudy._path" class="group block border-t border-line pt-5">
     <p
       v-if="caseStudy.area"
-      class="text-xs font-mono uppercase tracking-widest text-accent mb-2"
+      class="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-2"
     >
       {{ caseStudy.area }}
     </p>
-    <h3 class="text-lg font-semibold text-ink group-hover:text-accent transition-colors mb-2">
+    <h3
+      class="font-display text-xl font-bold uppercase tracking-tight text-ink group-hover:text-lav transition-colors"
+    >
       {{ caseStudy.title }}
     </h3>
-    <p class="text-sm text-mute leading-relaxed">{{ caseStudy.summary }}</p>
+    <p class="mt-2 text-sm text-mute leading-relaxed">{{ caseStudy.summary }}</p>
   </NuxtLink>
 </template>

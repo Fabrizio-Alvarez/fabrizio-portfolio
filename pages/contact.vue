@@ -11,14 +11,14 @@ useHead({ title: () => t('seo.contactTitle') })
       {{ site.availableFor }} {{ t('ui.contactLead') }}
     </p>
 
-    <div class="grid sm:grid-cols-2 gap-px bg-line border border-line rounded-lg overflow-hidden">
+    <div class="border-y border-line sm:divide-y divide-line">
       <div
         v-for="c in channels"
         :key="c.label"
-        class="bg-white px-5 py-5 flex items-center justify-between gap-4"
+        class="py-5 flex items-center justify-between gap-4"
       >
         <div>
-          <p class="text-xs font-mono uppercase tracking-widest text-accent">{{ c.label }}</p>
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-violet">{{ c.label }}</p>
           <p class="mt-1 text-sm text-ink break-all">{{ c.value }}</p>
         </div>
         <a
@@ -26,19 +26,19 @@ useHead({ title: () => t('seo.contactTitle') })
           :href="c.href"
           :target="c.href.startsWith('http') ? '_blank' : undefined"
           rel="noopener"
-          class="text-xs font-medium text-accent hover:text-ink transition-colors whitespace-nowrap"
+          class="font-mono text-xs uppercase tracking-widest text-lav hover:text-violet transition-colors whitespace-nowrap"
         >
           {{ t('ui.open') }} →
         </a>
       </div>
     </div>
 
-    <div class="mt-10 border border-line rounded-lg p-8 sm:p-10">
-      <h2 class="text-xl font-semibold text-ink">{{ t('ui.preferEmail') }}</h2>
+    <div class="mt-12 border-t border-line pt-8">
+      <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-ink">{{ t('ui.preferEmail') }}</h2>
       <p class="mt-2 text-mute text-sm">{{ t('ui.dropLine') }}</p>
       <a
         :href="`mailto:${site.email}`"
-        class="mt-5 inline-flex items-center px-5 py-2.5 bg-ink text-white text-sm font-medium rounded-md hover:bg-accent transition-colors"
+        class="mt-5 inline-flex items-center px-5 py-2.5 bg-violet text-white font-mono text-xs uppercase tracking-widest hover:bg-lav hover:text-deep transition-colors"
       >
         {{ site.email }}
       </a>

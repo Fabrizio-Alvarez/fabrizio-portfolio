@@ -1,16 +1,16 @@
 <script setup lang="ts">
-defineProps<{ eyebrow?: string; title: string }>()
+defineProps<{ eyebrow?: string; num?: string; title: string }>()
 </script>
 
 <template>
   <div>
     <p
       v-if="eyebrow"
-      class="text-xs font-mono uppercase tracking-widest text-accent mb-2"
+      class="font-mono text-xs uppercase tracking-[0.2em] text-lav mb-3"
     >
-      {{ eyebrow }}
+      <span v-if="num" class="text-violet">{{ num }}</span>{{ num ? ' — ' : '' }}{{ eyebrow }}
     </p>
-    <h2 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+    <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-ink leading-none">
       {{ title }}
     </h2>
   </div>

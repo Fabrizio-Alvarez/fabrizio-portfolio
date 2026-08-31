@@ -34,24 +34,26 @@ useHead({
   <article v-if="project" class="container-content py-16">
     <NuxtLinkLocale
       to="/projects"
-      class="text-sm text-accent hover:text-ink transition-colors mb-8 inline-block"
+      class="font-mono text-xs uppercase tracking-widest text-lav hover:text-violet transition-colors mb-8 inline-block"
     >
       {{ t('ui.allProjectsLink') }}
     </NuxtLinkLocale>
 
     <header class="mb-10">
-      <p class="text-xs font-mono uppercase tracking-widest text-accent mb-2">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3">
         {{ project.role || t('ui.author') }}<span v-if="project.year"> · {{ project.year }}</span>
       </p>
-      <h1 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight">{{ project.title }}</h1>
-      <p class="mt-4 text-lg text-mute max-w-2xl leading-relaxed">{{ project.summary }}</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold uppercase tracking-tight text-ink leading-none">
+        {{ project.title }}
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-mute max-w-2xl leading-relaxed">{{ project.summary }}</p>
       <div class="mt-6 flex flex-wrap gap-3 items-center">
         <a
           v-if="project.repo"
           :href="project.repo"
           target="_blank"
           rel="noopener"
-          class="text-sm font-medium text-ink border border-line rounded-md px-3 py-1.5 hover:border-ink transition-colors"
+          class="font-mono text-xs uppercase tracking-widest text-ink border border-line px-3 py-1.5 hover:border-lav hover:text-lav transition-colors"
         >
           {{ t('ui.githubLink') }} →
         </a>
@@ -60,21 +62,21 @@ useHead({
           :href="project.demo"
           target="_blank"
           rel="noopener"
-          class="text-sm font-medium text-white bg-ink rounded-md px-3 py-1.5 hover:bg-accent transition-colors"
+          class="font-mono text-xs uppercase tracking-widest text-white bg-violet px-3 py-1.5 hover:bg-lav hover:text-deep transition-colors"
         >
           {{ t('ui.liveDemo') }} →
         </a>
-        <div v-if="project.stack?.length" class="flex flex-wrap gap-1.5">
+        <div v-if="project.stack?.length" class="flex flex-wrap gap-x-3 gap-y-1">
           <span
             v-for="tech in project.stack"
             :key="tech"
-            class="text-xs px-2 py-0.5 bg-ink/5 text-ink/70 rounded font-mono"
+            class="font-mono text-[11px] text-mute"
           >{{ tech }}</span>
         </div>
       </div>
     </header>
 
-    <div class="prose prose-slate max-w-none">
+    <div class="prose max-w-none">
       <ContentRenderer :value="project" />
     </div>
 

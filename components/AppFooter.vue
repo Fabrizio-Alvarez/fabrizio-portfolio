@@ -7,16 +7,17 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="border-t border-line">
-    <div class="container-content py-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-sm text-mute">
-      <div>
-        <p class="text-ink font-medium">{{ site.fullName }}</p>
-        <p class="mt-0.5">© {{ year }} · {{ site.role }}</p>
-      </div>
-      <div class="flex items-center gap-5">
-        <a :href="`mailto:${site.email}`" class="hover:text-ink transition-colors">Email</a>
-        <a :href="site.github" target="_blank" rel="noopener" class="hover:text-ink transition-colors">GitHub</a>
-        <a :href="site.linkedin" target="_blank" rel="noopener" class="hover:text-ink transition-colors">LinkedIn</a>
+  <footer class="border-t border-line bg-deep">
+    <div
+      class="container-content py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-mute"
+    >
+      <p class="lowercase tracking-wider">© {{ year }} · {{ site.fullName }}</p>
+      <div class="flex items-center gap-6 uppercase tracking-widest">
+        <a :href="`mailto:${site.email}`" class="hover:text-lav transition-colors">Email</a>
+        <a :href="site.github" target="_blank" rel="noopener" class="hover:text-lav transition-colors">GitHub</a>
+        <a :href="site.linkedin" target="_blank" rel="noopener" class="hover:text-lav transition-colors">LinkedIn</a>
+        <span class="text-line">|</span>
+        <span>Buenos Aires, AR</span>
       </div>
     </div>
   </footer>

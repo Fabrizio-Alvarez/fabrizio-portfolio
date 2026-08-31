@@ -15,7 +15,7 @@ useHead({ title: () => t('seo.caseStudiesTitle') })
     <p class="text-mute max-w-2xl mt-4 mb-10 leading-relaxed">
       {{ t('ui.caseStudiesDesc') }}
     </p>
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       <CaseStudyCard
         v-for="c in caseStudies"
         :key="c._path"

@@ -15,7 +15,7 @@ useHead({ title: () => t('seo.projectsTitle') })
     <p class="text-mute max-w-2xl mt-4 mb-10 leading-relaxed">
       {{ t('ui.projectsDesc') }}
     </p>
-    <div class="grid gap-5 sm:grid-cols-2">
+    <div class="border-b border-line">
       <ProjectCard
         v-for="p in projects"
         :key="p._path"
