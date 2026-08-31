@@ -64,6 +64,8 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 - ✅ **Bilingüe es/en completo** — `@nuxtjs/i18n` `prefix_except_default` (`/` en, `/es/*` es). Lang switcher en header. SEO hreflang completo (x-default, en, en-US, es, es-AR).
 - ✅ **SEO bundle completo**: OG image branded 1200×630 (`public/og.png`, source `og.svg`, regenerable con `npm run gen:og` vía `scripts/gen-og.mjs`); `@nuxtjs/sitemap` con sitemaps por locale + hreflang alternates; `robots.txt` con URL absoluta.
 - ✅ Contenido **real** del CV (no placeholders). Traducciones ES con terminología argentina oficial.
+- ✅ **DEPLOYADO Y LIVE en `https://falvarez.dev`** — Worker de assets estáticos en Cloudflare (flujo unificado, NO Pages). Verificado en producción: home 200, `/projects/mnemo` EN/ES 200 con `lang` correcto, `www` → 301 al apex, 404s reales, robots + sitemap con `falvarez.dev`, y **`mnemo.falvarez.dev` intacto** (200).
+- ✅ **Deploy 100% desde el repo** (cero clicks en dashboard): `deploy/wrangler.toml` declara assets + custom domains (`routes` con `custom_domain = true`) y `deploy/worker.js` hace el 301 `www`→apex (`run_worker_first` + binding `ASSETS`). El dashboard solo provee: build command `npm run generate`, deploy command `npx wrangler deploy -c deploy/wrangler.toml`.
 
 ## Decisiones de stack y contenido
 
@@ -121,7 +123,7 @@ Aparece solo en `/projects` y genera su `/projects/mi-proyecto`. Para que exista
 
 ## Pendientes (fase 2)
 
-- ⏳ **Deploy Cloudflare Pages en `falvarez.dev`** — el repo ya está en GitHub (`Fabrizio-Alvarez/fabrizio-portfolio`, main sincronizado). Pasos exactos y gotchas DNS en `DEPLOY.md` (no tocar el CNAME de `mnemo`).
+- ✅ **Deploy a producción** — live en `https://falvarez.dev` (ver 2026-08-31 en Estado). La saga completa de gotchas del deploy, en `DEPLOY.md`: Nitro auto-detecta wrangler en la raíz y secuestra el preset (por eso el config vive en `deploy/`), Node 24 por npm 11 (`npm ci` de npm 10 rompe con peers opcionales), y TOML sobre JSONC.
 - ✅ **Diagramas técnicos** — 5 SVGs inline en `public/diagrams/`, referenciados desde EN y ES:
   - `supermarket-stock-ddd.svg` — capas DDD (Presentation → Application → Domain ← Infrastructure).
   - `job-tracker-state.svg` — state machine de application status.
