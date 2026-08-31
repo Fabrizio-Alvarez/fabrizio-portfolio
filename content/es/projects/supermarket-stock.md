@@ -13,7 +13,7 @@ demo: ''
 year: 2025
 role: 'Autor'
 featured: true
-order: 1
+order: 2
 ---
 
 ## Descripción general

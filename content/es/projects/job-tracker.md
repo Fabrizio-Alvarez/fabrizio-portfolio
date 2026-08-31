@@ -13,7 +13,7 @@ demo: ''
 year: 2025
 role: 'Autor'
 featured: false
-order: 2
+order: 3
 ---
 
 ## Por qué lo construí
