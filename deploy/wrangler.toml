@@ -1,6 +1,17 @@
 name = "fabrizio-portfolio"
 compatibility_date = "2026-08-31"
 
+# Custom domains attached by `wrangler deploy` itself (no dashboard setup).
+# DNS records + certificates are created automatically on the falvarez.dev zone.
+# www stays non-canonical: the Redirect Rule (www -> apex) runs before the Worker.
+[[routes]]
+pattern = "falvarez.dev"
+custom_domain = true
+
+[[routes]]
+pattern = "www.falvarez.dev"
+custom_domain = true
+
 [assets]
 directory = "../.output/public"
 not_found_handling = "404-page"
