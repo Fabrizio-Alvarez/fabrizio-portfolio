@@ -56,23 +56,32 @@ Worker project → **Settings → Builds → Build settings**:
 
 Every push to `main` rebuilds automatically.
 
-## 2. Custom domains — `falvarez.dev`
+## 2. Custom domains — `falvarez.dev` (automatic)
 
-Worker project → **Settings → Domains & routes → Add → Custom domain**:
+Both domains are declared in `deploy/wrangler.toml` as
+`routes` with `custom_domain = true`; every deploy attaches them automatically
+(DNS records + certificates are created on the zone — no dashboard step, see
+[Custom Domains docs](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)):
 
-1. `falvarez.dev` — Cloudflare creates the DNS record itself.
-2. `www.falvarez.dev` — same. The redirect below makes apex canonical.
+- `falvarez.dev` (apex, canonical)
+- `www.falvarez.dev` (kept non-canonical by the redirect rule below)
 
-Then **Rules → Redirect Rules**: `Hostname equals www.falvarez.dev` →
-dynamic redirect `concat("https://falvarez.dev", http.request.uri.path)`,
-status 301, preserve query string.
+One-time dashboard rule (already set): **Rules → Redirect Rules**: `Hostname
+equals www.falvarez.dev` → dynamic redirect
+`concat("https://falvarez.dev", http.request.uri.path)`, status 301,
+preserve query string.
+
+Dashboard fallback (only if the CI token ever lacks zone permissions to attach
+domains): Worker → **Settings → Domains & Routes → Add → Custom Domain**, or
+run `npx wrangler login && npx wrangler deploy -c deploy/wrangler.toml` once
+from a machine with account access.
 
 ### ⚠️ Gotchas (from the Mnemo setup)
 
 - Leave the existing **`mnemo` CNAME record untouched** — that subdomain
   belongs to the Worker of Mnemo.
-- Don't create DNS records by hand for the apex/www custom domains; the
-  Custom Domain flow does it correctly (Worker route + cert).
+- Custom Domains cannot be created on a hostname with an existing CNAME record;
+  apex and `www` were clean, so the attach is automatic.
 
 ## 3. Local preview of the production build
 
