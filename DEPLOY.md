@@ -26,8 +26,11 @@ The repo declares itself a **pure static site** in `wrangler.jsonc`:
 }
 ```
 
-`.node-version` (22) pins the build runtime — the build needs Node ≥ 20.19
-(Vite 7), older runners fail.
+`.node-version` (24) pins the build runtime. Node 24 matters for two reasons:
+Vite 7 needs Node ≥ 20.19, and — more importantly — Node 24 bundles **npm 11**.
+npm 10's `npm ci` re-resolves optional peer deps (`oxc-parser >=0.140.0`) against
+the registry and then fails with *"Missing: @oxc-parser/binding-* from lock
+file"*. npm 11 respects the lockfile as-is.
 
 ## 1. Project settings (dashboard, one time)
 
@@ -35,8 +38,8 @@ Worker project → **Settings**:
 
 - **Builds → Build settings** → Build command: `npm run generate`
   (⚠️ NOT `npm run build` — that's the SSR build, wrong output).
-- **Variables and Secrets**: `NODE_VERSION` = `22` (redundant with
-  `.node-version`, but free).
+- **Variables and Secrets**: `NODE_VERSION` = `24` (must match `.node-version`;
+  a stale `22` here overrides the file and brings back npm 10).
 
 Every push to `main` rebuilds automatically.
 
