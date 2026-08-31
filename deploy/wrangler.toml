@@ -1,9 +1,13 @@
 name = "fabrizio-portfolio"
 compatibility_date = "2026-08-31"
 
+# The site is static assets; the tiny worker.js only handles the www → apex 301.
+# run_worker_first routes ALL traffic through the worker (the redirect must run
+# before asset matching; apex traffic passes straight through to ASSETS).
+main = "worker.js"
+
 # Custom domains attached by `wrangler deploy` itself (no dashboard setup).
 # DNS records + certificates are created automatically on the falvarez.dev zone.
-# www stays non-canonical: the Redirect Rule (www -> apex) runs before the Worker.
 [[routes]]
 pattern = "falvarez.dev"
 custom_domain = true
@@ -14,4 +18,6 @@ custom_domain = true
 
 [assets]
 directory = "../.output/public"
+binding = "ASSETS"
 not_found_handling = "404-page"
+run_worker_first = true
