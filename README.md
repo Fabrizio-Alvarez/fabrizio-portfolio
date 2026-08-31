@@ -74,4 +74,5 @@ It auto-appears on `/projects` and gets its own `/projects/my-project` page.
 
 ## Deploy — see [DEPLOY.md](./DEPLOY.md)
 
-Recommended host: **Vercel** (zero-config for Nuxt, preview deploys per PR).
+Host: **Cloudflare Pages** on `falvarez.dev` (same CF account/domain as the Mnemo
+worker; projects live on their own subdomains).

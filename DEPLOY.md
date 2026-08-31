@@ -1,62 +1,57 @@
 # Deploy guide
 
-The site is a fully static build (`nuxt generate` → `.output/public/`). Any static
-host works. **Vercel** is recommended.
+Fully static build (`nuxt generate` → `.output/public/`), deployed to
+**Cloudflare Pages** on the apex domain **`falvarez.dev`**.
 
-## 1. Vercel (recommended — zero config)
+Infra decision (inherited from the Mnemo project, already taken):
 
-1. Push the repo to GitHub (see below).
-2. Go to <https://vercel.com/new> and import the repo.
-3. Vercel auto-detects Nuxt. Use these defaults:
-   - **Framework preset:** Nuxt
+- One domain for the whole portfolio: apex = this landing, each project hangs off
+  its own subdomain (`mnemo.falvarez.dev` is live; future `api.`, `app.`, …).
+- Same Cloudflare account as Mnemo — the domain is already an active zone there.
+- Pages (static) and Workers (apps) are both free and coexist without conflict.
+
+## 1. Cloudflare Pages (connect to Git)
+
+The repo is already on GitHub (`Fabrizio-Alvarez/fabrizio-portfolio`).
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
+   **Connect to Git** → select this repo.
+2. Build settings:
+   - **Framework preset:** None (or Nuxt/Astro if offered — values below win)
    - **Build command:** `npm run generate`
-   - **Output directory:** `.output/public`
+   - **Build output directory:** `.output/public`
    - **Install command:** `npm install`
-4. Click **Deploy**. First deploy runs in ~1–2 min.
+3. **Save and Deploy.** First build runs in ~1–2 min.
 
-Every push to `main` redeploys automatically. Pull requests get **preview URLs**.
+Every push to `main` rebuilds automatically. Pull requests get preview URLs.
 
-### Custom domain
+## 2. Custom domain — `falvarez.dev`
 
-Project → Settings → Domains → add `yourdomain.dev`. Vercel provisions the cert
-and gives you the DNS records to set at your registrar.
+Pages project → **Custom domains** → **Set up a custom domain** → `falvarez.dev`.
 
-## 2. Push to GitHub (first time)
+- Cloudflare creates the DNS record by itself — do **not** touch the DNS manually.
+- Add `www.falvarez.dev` too and set it to **redirect to the apex**
+  (Rules → Redirect Rules, or a Page Rule: `www.falvarez.dev/*` →
+  `https://falvarez.dev/$1`, 301).
 
-```bash
-cd "C:/Users/aleph/OneDrive/Documents/Proyectos/fabrizio-portfolio"
-git remote add origin https://github.com/Fabrizio-Alvarez/portfolio.git
-git branch -M main
-git push -u origin main
-```
+### ⚠️ Gotchas (from the Mnemo setup)
 
-Create the empty repo first at <https://github.com/new> (name suggestion: `portfolio`).
-Don't initialize it with a README — the local commit is already there.
+- The apex currently points to nothing — assigning the custom domain in Pages
+  creates the record. Leave the existing **`mnemo` CNAME record untouched**:
+  that subdomain belongs to the Worker, not to Pages.
+- The `mnemo` Worker and this Pages project are different products on the same
+  domain — no conflict, no migration needed.
 
-## 3. Other hosts (optional)
-
-- **Netlify** — build `npm run generate`, publish dir `.output/public`.
-- **GitHub Pages** — run `npm run generate`, push the contents of `.output/public/`
-  to a `gh-pages` branch (or use a Actions workflow). Output is plain HTML/CSS/JS.
-
-## 4. Local preview of the production build
+## 3. Local preview of the production build
 
 ```bash
 npm run generate
 npx serve .output/public   # or: npm run preview   (Nuxt's static preview server)
 ```
 
----
+## 4. Other hosts (not used)
 
-## Phase-2 notes (not blocking)
-
-- **Bilingual es/en** — the site is English-first today (matches the CV source of
-  truth and the international-remote target). To go bilingual, install
-  `@nuxtjs/i18n` and either translate `useSite.ts` by locale or duplicate the
-  `content/**` markdown with a locale suffix (`*.es.md`). Architecture is already
-  centralized to make this a clean swap.
-- **Sitemap** — once deployed to a real domain, add a `sitemap.xml` (the
-  `@nuxtjs/sitemap` module integrates with `nitro.prerender`) and update
-  `public/robots.txt` to point at the live URL.
-- **OG image** — generate a branded `og-image.png` (1200×630) and reference it in
-  `nuxt.config.ts` `app.head.meta` for rich social previews.
+The output is plain HTML/CSS/JS — Vercel, Netlify, or GitHub Pages would also
+work (`npm run generate`, publish `.output/public/`). Cloudflare Pages is the
+chosen home: same account as the domain, zero egress fees, no vendor URL in
+production.

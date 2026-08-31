@@ -1,6 +1,6 @@
 # 📋 CONTEXTO — Portfolio (Nuxt 3 SSG)
 
-**Última actualización:** 2026-07-20
+**Última actualización:** 2026-08-31
 **Para:** retomar la edición del portfolio en cualquier sesión abierta en este repo.
 
 ---
@@ -13,7 +13,7 @@ Capa web de presentación montada sobre los artefactos de `fabrizio-career/` (CV
 **Objetivo** (del `PLAN-portafolio.md`): romper la percepción "PHP legacy" y apuntar a roles
 backend / product-engineer **remotos USD 2-3k**, bilingüe es/en.
 
-**Stack:** Nuxt 3 (SSG) · Vue 3 · @nuxt/content v2 · @nuxtjs/i18n · Tailwind CSS. Output 100% estático → hostea en cualquier lado (recomendado: Vercel). **Bilingüe es/en** (en default sin prefijo · `/es/*` para español).
+**Stack:** Nuxt 3 (SSG) · Vue 3 · @nuxt/content v2 · @nuxtjs/i18n · Tailwind CSS. Output 100% estático → **Cloudflare Pages en el apex `falvarez.dev`** (misma cuenta CF que el Worker de Mnemo; decisiones de infra en el contexto heredado de mnemo). **Bilingüe es/en** (en default sin prefijo · `/es/*` para español).
 
 ---
 
@@ -34,11 +34,11 @@ backend / product-engineer **remotos USD 2-3k**, bilingüe es/en.
 | `pages/projects/{index,[slug]}.vue` | Lista + detalle de proyectos. |
 | `pages/case-studies/{index,[slug]}.vue` | Lista + detalle de case studies. |
 | `pages/{about,contact}.vue` | About (summary + skills) y Contact (canales). |
-| `content/projects/*.md` | `supermarket-stock.md` (featured), `job-tracker.md`. |
+| `content/projects/*.md` | `mnemo.md` (featured, live), `supermarket-stock.md` (featured), `job-tracker.md`. |
 | `content/case-studies/*.md` | `qa-transformation`, `payments-integrations`, `performance-reliability`. |
 | `public/` | `favicon.svg` (monograma F), `robots.txt`. |
 | `README.md` | Overview + layout + cómo sumar proyectos. |
-| `DEPLOY.md` | Deploy Vercel + push GitHub + notas fase 2. |
+| `DEPLOY.md` | Deploy Cloudflare Pages (`falvarez.dev`) + custom domain + gotchas del DNS (no tocar el CNAME de `mnemo`). |
 
 ---
 
@@ -55,14 +55,14 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 
 ---
 
-## Estado actual (verificado 2026-07-20)
+## Estado actual (verificado 2026-08-31)
 
-- ✅ SSG build limpio: **74 rutas** prerenderizadas (67 site + sitemap_index + 2 sitemaps locale + style.xsl), 0 errores.
-- ✅ Smoke test sobre el build: titles, html lang, hreflang + canonical, contenido localizado verificados en ambas locales.
+- ✅ SSG build limpio: **82 rutas** prerenderizadas, 0 errores.
+- ✅ Smoke test sobre el build: rutas nuevas de Mnemo (EN/ES), título + links live/repo, orden Mnemo→Supermarket→Job-Tracker en `/projects`, sitemap con `falvarez.dev` + hreflang, cero rastro de vercel — todo verificado.
+- ✅ **Proyecto Mnemo agregado** (EN + ES): featured `order: 1`, `demo: https://mnemo.falvarez.dev`. Supermarket pasa a `order: 2`, Job-Tracker a `3`.
+- ✅ **URLs de producción apuntan a `falvarez.dev`**: `site.url` + `i18n.baseUrl` en `nuxt.config.ts`, `robots.txt`, sitemap y canonical/hreflang derivados.
 - ✅ **Bilingüe es/en completo** — `@nuxtjs/i18n` `prefix_except_default` (`/` en, `/es/*` es). Lang switcher en header. SEO hreflang completo (x-default, en, en-US, es, es-AR).
 - ✅ **SEO bundle completo**: OG image branded 1200×630 (`public/og.png`, source `og.svg`, regenerable con `npm run gen:og` vía `scripts/gen-og.mjs`); `@nuxtjs/sitemap` con sitemaps por locale + hreflang alternates; `robots.txt` con URL absoluta.
-- ✅ Hidratación correcta: `_payload.json` por ruta + `/api/_content/query/*.json`.
-- ✅ Git history: `82ad1f7` (init) · `70c2642` (bilingüe) · `932cc9a` (SEO bundle).
 - ✅ Contenido **real** del CV (no placeholders). Traducciones ES con terminología argentina oficial.
 
 ## Decisiones de stack y contenido
@@ -77,6 +77,7 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 - **Bilingüe es/en** vía `@nuxtjs/i18n` (`prefix_except_default`): `/` = en (sin prefijo, audiencia principal), `/es/*` = español. Content split por directorio (`content/{projects,case-studies}/*.md` para en, `content/es/...` para es). SEO hreflang completo (x-default/en/en-US/es/es-AR) vía `useLocaleHead`.
 - **OG image branded** (`public/og.png` 1200×630, monograma F + headline + métricas) generado desde SVG inline con sharp (`scripts/gen-og.mjs`). Mismo lenguaje visual que el favicon.
 - **Sitemap automático** vía `@nuxtjs/sitemap` con `site.url` configurado: `sitemap_index.xml` + un sitemap por locale, cada URL con `xhtml:link` hreflang alternates para Google.
+- **Infra heredada de Mnemo (YA TOMADA)**: un dominio para todo el portafolio — apex `falvarez.dev` = este landing en **Cloudflare Pages** (misma cuenta CF que el Worker de Mnemo), cada proyecto vivo en su subdominio (`mnemo.falvarez.dev` ya live). No Vercel ni URLs de vendor.
 
 ### Lo que NO (por ahora)
 - ❌ Dark mode, animaciones, mobile menu → YAGNI para v1 (el header wrapea bien en mobile con 4 items).
@@ -120,7 +121,7 @@ Aparece solo en `/projects` y genera su `/projects/mi-proyecto`. Para que exista
 
 ## Pendientes (fase 2)
 
-- ⏳ **Push a GitHub + deploy Vercel** (pasos exactos en `DEPLOY.md`).
+- ⏳ **Deploy Cloudflare Pages en `falvarez.dev`** — el repo ya está en GitHub (`Fabrizio-Alvarez/fabrizio-portfolio`, main sincronizado). Pasos exactos y gotchas DNS en `DEPLOY.md` (no tocar el CNAME de `mnemo`).
 - ✅ **Diagramas técnicos** — 5 SVGs inline en `public/diagrams/`, referenciados desde EN y ES:
   - `supermarket-stock-ddd.svg` — capas DDD (Presentation → Application → Domain ← Infrastructure).
   - `job-tracker-state.svg` — state machine de application status.

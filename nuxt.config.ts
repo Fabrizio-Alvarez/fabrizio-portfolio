@@ -5,13 +5,13 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxtjs/tailwindcss'],
 
-  // Site URL used by @nuxtjs/sitemap and i18n for absolute canonical/hreflang URLs.
-  // Update after deploy if the production domain differs.
+  // Production domain (apex on Cloudflare Pages — same CF account as the Mnemo
+  // worker; projects hang off their own subdomains, e.g. mnemo.falvarez.dev).
   site: {
-    url: 'https://fabrizio-alvarez.vercel.app',
+    url: 'https://falvarez.dev',
   },
 
-  // Static Site Generation — output a fully static site for Vercel/any host.
+  // Static Site Generation — fully static output, hosted on Cloudflare Pages.
   ssr: true,
   nitro: {
     prerender: {
@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     ],
     lazy: true,
     langDir: 'locales',
-    baseUrl: 'https://fabrizio-alvarez.vercel.app',
+    baseUrl: 'https://falvarez.dev',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_locale',
