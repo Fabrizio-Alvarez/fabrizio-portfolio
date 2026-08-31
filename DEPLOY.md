@@ -1,46 +1,62 @@
 # Deploy guide
 
 Fully static build (`nuxt generate` → `.output/public/`), deployed to
-**Cloudflare Pages** on the apex domain **`falvarez.dev`**.
+**Cloudflare** on the apex domain **`falvarez.dev`**.
 
 Infra decision (inherited from the Mnemo project, already taken):
 
 - One domain for the whole portfolio: apex = this landing, each project hangs off
   its own subdomain (`mnemo.falvarez.dev` is live; future `api.`, `app.`, …).
 - Same Cloudflare account as Mnemo — the domain is already an active zone there.
-- Pages (static) and Workers (apps) are both free and coexist without conflict.
 
-## 1. Cloudflare Pages (connect to Git)
+## How the deploy works (Workers + static assets)
 
-The repo is already on GitHub (`Fabrizio-Alvarez/fabrizio-portfolio`).
+The current Cloudflare dashboard creates Git-connected projects as **Workers**
+(the unified flow), not classic Pages. A Worker deploy expects an entry-point —
+that's why a bare repo fails with *"The entry-point file at index.mjs was not
+found"*.
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
-   **Connect to Git** → select this repo.
-2. Build settings:
-   - **Framework preset:** None (or Nuxt/Astro if offered — values below win)
-   - **Build command:** `npm run generate`
-   - **Build output directory:** `.output/public`
-   - **Install command:** `npm install`
-3. **Save and Deploy.** First build runs in ~1–2 min.
+The repo declares itself a **pure static site** in `wrangler.jsonc`:
 
-Every push to `main` rebuilds automatically. Pull requests get preview URLs.
+```jsonc
+{
+  "name": "fabrizio-portfolio",
+  "compatibility_date": "2026-08-31",
+  "assets": { "directory": "./.output/public" }   // no "main" → assets-only
+}
+```
 
-## 2. Custom domain — `falvarez.dev`
+`.node-version` (22) pins the build runtime — the build needs Node ≥ 20.19
+(Vite 7), older runners fail.
 
-Pages project → **Custom domains** → **Set up a custom domain** → `falvarez.dev`.
+## 1. Project settings (dashboard, one time)
 
-- Cloudflare creates the DNS record by itself — do **not** touch the DNS manually.
-- Add `www.falvarez.dev` too and set it to **redirect to the apex**
-  (Rules → Redirect Rules, or a Page Rule: `www.falvarez.dev/*` →
-  `https://falvarez.dev/$1`, 301).
+Worker project → **Settings**:
+
+- **Builds → Build settings** → Build command: `npm run generate`
+  (⚠️ NOT `npm run build` — that's the SSR build, wrong output).
+- **Variables and Secrets**: `NODE_VERSION` = `22` (redundant with
+  `.node-version`, but free).
+
+Every push to `main` rebuilds automatically.
+
+## 2. Custom domains — `falvarez.dev`
+
+Worker project → **Settings → Domains & routes → Add → Custom domain**:
+
+1. `falvarez.dev` — Cloudflare creates the DNS record itself.
+2. `www.falvarez.dev` — same. The redirect below makes apex canonical.
+
+Then **Rules → Redirect Rules**: `Hostname equals www.falvarez.dev` →
+dynamic redirect `concat("https://falvarez.dev", http.request.uri.path)`,
+status 301, preserve query string.
 
 ### ⚠️ Gotchas (from the Mnemo setup)
 
-- The apex currently points to nothing — assigning the custom domain in Pages
-  creates the record. Leave the existing **`mnemo` CNAME record untouched**:
-  that subdomain belongs to the Worker, not to Pages.
-- The `mnemo` Worker and this Pages project are different products on the same
-  domain — no conflict, no migration needed.
+- Leave the existing **`mnemo` CNAME record untouched** — that subdomain
+  belongs to the Worker of Mnemo.
+- Don't create DNS records by hand for the apex/www custom domains; the
+  Custom Domain flow does it correctly (Worker route + cert).
 
 ## 3. Local preview of the production build
 
@@ -49,9 +65,8 @@ npm run generate
 npx serve .output/public   # or: npm run preview   (Nuxt's static preview server)
 ```
 
-## 4. Other hosts (not used)
+## 4. If the build ever shows `index.mjs not found` again
 
-The output is plain HTML/CSS/JS — Vercel, Netlify, or GitHub Pages would also
-work (`npm run generate`, publish `.output/public/`). Cloudflare Pages is the
-chosen home: same account as the domain, zero egress fees, no vendor URL in
-production.
+It means the deploy didn't find the static-assets config: check `wrangler.jsonc`
+exists at the repo root with `assets.directory`, and that the build command is
+`npm run generate` (output `.output/public` must exist after build).
