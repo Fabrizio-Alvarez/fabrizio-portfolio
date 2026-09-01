@@ -71,9 +71,8 @@ Env útil: `NUXT_TELEMETRY_DISABLED=1` (evita el prompt de telemetría en el pri
 
 ### Lo que SÍ
 - **Nuxt 3 + Content v2** (no Nuxt 4 + Content 3): pinneo lo roca-sólida para un primer deploy sin pelear APIs recién salidas. Demostrar skill Vue/Nuxt no depende de 3 vs 4 (ambos corren Vue 3 + Composition API). Upgrade = deuda técnica menor, fase posterior.
-- **English-first**: matchea el CV source-of-truth + objetivo internacional remoto.
+- **"Technical Ink" (2026-08-31) — restyle completo vía Stitch MCP**: el branding del CV se reemplazó por un design system dark editorial generado con Gemini 3.1 Pro a través del MCP oficial de Google Stitch (`stitch.googleapis.com/mcp`, config en `~/.omp/agent/mcp.json`, proyecto `fabrizio-portfolio` en Stitch). Tokens: fondo `#111317`/`#0c0e12`, texto `#e2e2e7`/`#958da1`, hairlines `#2a2a33`, violeta `#7c3aed` (fills) + `#d2bbff` (texto acento legible en dark). Tipos: **Archivo Narrow** display · Inter body · JetBrains Mono labels. Editorial: sin sombras, sin gradientes, sin bordes redondeados — hairlines 1px, esquinas rectas, mayúsculas display, labels mono numerados (`01 — SELECTED WORK`). Referencias del diseño en `.stitch/` (gitignored).
 - **SSG** (no SSR): estático, SEO fuerte, hosteo gratis en cualquier lado.
-- **Branding heredado del CV**: `ink #1a1a1a`, `accent #2c3e50`, `mute #666`, `line #cfd3d8`.
 - **Markdown-driven** (`@nuxt/content`): sumar proyecto = dropear un `.md`.
 - **Métricas hard** en el home (5 yrs · 30k/día · 5 países · 30s→2s) para romper el "PHP legacy".
 - **Bilingüe es/en** vía `@nuxtjs/i18n` (`prefix_except_default`): `/` = en (sin prefijo, audiencia principal), `/es/*` = español. Content split por directorio (`content/{projects,case-studies}/*.md` para en, `content/es/...` para es). SEO hreflang completo (x-default/en/en-US/es/es-AR) vía `useLocaleHead`.
