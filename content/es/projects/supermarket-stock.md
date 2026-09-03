@@ -9,7 +9,7 @@ stack:
   - 'Docker'
   - 'GitHub Actions'
 repo: 'https://github.com/Fabrizio-Alvarez/Ejercicio-Arquitectura'
-demo: ''
+demo: 'https://supermercado.falvarez.dev'
 year: 2025
 role: 'Autor'
 featured: true
@@ -23,6 +23,10 @@ de stock, movimientos (recepciones, ventas, ajustes) y las reglas asociadas. Es
 primero un estudio de arquitectura y segundo un servicio funcional — construido
 para demostrar un núcleo PHP limpio, framework-agnostic, capaz de sobrevivir a un
 cambio de framework.
+
+**Live:** <https://supermercado.falvarez.dev> — demo completa con el storefront
+Vue/Inertia (`/tienda`) y la REST API detrás. Usuarios demo:
+`cajero@` · `depositista@` · `repositor@supermercado.test` (password `password`).
 
 ## Arquitectura: DDD en capas
 

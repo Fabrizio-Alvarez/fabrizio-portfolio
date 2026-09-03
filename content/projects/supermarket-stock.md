@@ -9,7 +9,7 @@ stack:
   - 'Docker'
   - 'GitHub Actions'
 repo: 'https://github.com/Fabrizio-Alvarez/Ejercicio-Arquitectura'
-demo: ''
+demo: 'https://supermercado.falvarez.dev'
 year: 2025
 role: 'Author'
 featured: true
@@ -22,6 +22,10 @@ A backend service for managing supermarket stock: products, stock levels, moveme
 (receipts, sales, adjustments), and the rules around them. It's an architecture
 study first and a working service second — built to prove a clean, framework-agnostic
 PHP core that can survive a framework swap.
+
+**Live:** <https://supermercado.falvarez.dev> — full demo with the Vue/Inertia
+storefront (`/tienda`) and the REST API behind it. Demo users:
+`cajero@` · `depositista@` · `repositor@supermercado.test` (password `password`).
 
 ## Architecture: DDD in layers
 
