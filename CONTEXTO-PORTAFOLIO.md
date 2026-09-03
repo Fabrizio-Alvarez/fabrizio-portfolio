@@ -34,7 +34,7 @@ backend / product-engineer **remotos USD 2-3k**, bilingüe es/en.
 | `pages/projects/{index,[slug]}.vue` | Lista + detalle de proyectos. |
 | `pages/case-studies/{index,[slug]}.vue` | Lista + detalle de case studies. |
 | `pages/{about,contact}.vue` | About (summary + skills) y Contact (canales). |
-| `content/projects/*.md` | `mnemo.md` (featured, live), `supermarket-stock.md` (featured), `job-tracker.md`. |
+| `content/projects/*.md` | `mnemo.md` (featured, live), `supermarket-stock.md` (featured, **live en `supermercado.falvarez.dev`** — Railway, Docker single-container), `job-tracker.md`. |
 | `content/case-studies/*.md` | `qa-transformation`, `payments-integrations`, `performance-reliability`. |
 | `public/` | `favicon.svg` (monograma F), `robots.txt`. |
 | `README.md` | Overview + layout + cómo sumar proyectos. |
